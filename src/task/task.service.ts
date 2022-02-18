@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTaskDTO } from './dto/create.task.dto';
-import { Task, TaskStatus } from './task.model';
+import { TaskStatus } from './task.enum';
+import { Task } from './task.model';
 import * as uuid from 'uuid';
 import { SearchTaskDTO } from './dto/search.task.dto';
 

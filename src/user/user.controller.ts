@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   Post,
   UsePipes,
   ValidationPipe,
@@ -11,6 +12,11 @@ import { UserService } from './user.service';
 @Controller('user')
 export class UserController {
   constructor(private userService: UserService) {}
+
+  @Get()
+  getProfile() {
+    
+  }
 
   @Post('/signup')
   @UsePipes(ValidationPipe)

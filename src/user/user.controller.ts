@@ -3,19 +3,24 @@ import {
   Controller,
   Get,
   Post,
+  UseGuards,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { AuthCredentialsDTO } from './dto/auth.credentials.dto';
 import { UserService } from './user.service';
+import { UserEntity } from 'src/user/user.entity';
+import { GetUser } from './get.user.decorator';
 
 @Controller('user')
 export class UserController {
   constructor(private userService: UserService) {}
 
-  @Get()
-  getProfile() {
-    
+  @Get('/profile')
+  @UseGuards(AuthGuard())
+  getProfile(@GetUser() user: UserEntity) {
+    return user;
   }
 
   @Post('/signup')

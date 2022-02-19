@@ -8,7 +8,7 @@ export const TypeORMConfiguration: TypeOrmModuleOptions = {
   port: 3306,
   host: 'localhost',
   type: 'mysql',
-  database: 'TasksManager',
-  synchronize: false,
+  database: 'tasksmanagerversion1',
+  synchronize: true,
   entities: [__dirname + '/../**/*.entity.{ts,js}'],
 };

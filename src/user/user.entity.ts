@@ -19,7 +19,7 @@ export class UserEntity extends BaseEntity {
   @Column()
   password: string;
 
-  async validatePassword(password: string) {
+  validatePassword(password: string) {
     const encrypt = `${crypto.MD5(password)}`;
 
     return encrypt == this.password;

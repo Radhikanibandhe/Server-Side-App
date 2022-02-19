@@ -23,8 +23,9 @@ export class UserRepository extends Repository<UserEntity> {
 
     // check if user exists
     if (user && user.validatePassword(password)) {
-      return true;
+      return user;
+    } else {
+      return null;
     }
-    return false;
   }
 }

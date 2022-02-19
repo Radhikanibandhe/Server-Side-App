@@ -9,6 +9,6 @@ export const TypeORMConfiguration: TypeOrmModuleOptions = {
   host: 'localhost',
   type: 'mysql',
   database: 'TasksManager',
-  synchronize: true,
+  synchronize: false,
   entities: [__dirname + '/../**/*.entity.{ts,js}'],
 };

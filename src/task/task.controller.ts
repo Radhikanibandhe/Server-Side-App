@@ -7,35 +7,44 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { GetUser } from 'src/user/get.user.decorator';
+import { UserEntity } from 'src/user/user.entity';
 import { CreateTaskDTO } from './dto/create.task.dto';
-import { TaskService } from './task.service';
 import { SearchTaskDTO } from './dto/search.task.dto';
 import { TaskStatus } from './task.enum';
+import { TaskService } from './task.service';
 
 @Controller('task')
+@UseGuards(AuthGuard())
 export class TaskController {
   // dependency injection
-  // task controller is dependent on task service
+  // TaskController is dependent on TaskService
   constructor(private taskService: TaskService) {}
 
   @Post()
   @UsePipes(ValidationPipe)
-  createTask(@Body() createTaskDto: CreateTaskDTO) {
-    // 1. generate a new task
+  createTask(
+    @GetUser() user: UserEntity,
+    @Body() createTaskDto: CreateTaskDTO,
+  ) {
+    // 1. create a new task
     // 2. return all tasks
-    return this.taskService.createTask(createTaskDto);
+    return this.taskService.createTask(createTaskDto, user);
   }
 
   @Get()
-  getTask(@Query() searchTaskDto: SearchTaskDTO) {
-    return this.taskService.getTasks(searchTaskDto);
+  getTasks(@GetUser() user: UserEntity, @Query() searchTaskDto: SearchTaskDTO) {
+    return this.taskService.getTasks(searchTaskDto, user);
   }
 
-  @Patch('/:id/status')
+  @Patch('/:id/:status')
   updateTaskStatus(
+    @GetUser() user: UserEntity,
     @Param('id') id: string,
     @Param('status') status: TaskStatus,
   ) {
@@ -43,7 +52,7 @@ export class TaskController {
   }
 
   @Delete('/:id')
-  deleteTask(@Param('id') id: string) {
+  deleteTask(@GetUser() user: UserEntity, @Param('id') id: string) {
     return this.taskService.deleteTask(id);
   }
 }

@@ -25,7 +25,7 @@ export class UserService {
     // create the jwt token
     const payload: JwtPayload = {
       username: authCredentialsDto.username,
-      id: user.id,
+      id: (await user).id,
     };
 
     // create the token
